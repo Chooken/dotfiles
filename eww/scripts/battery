@@ -1,0 +1,19 @@
+#!/bin/bash
+
+CHARGE=$(acpi -b | awk -F ' ' 'END {print $4}' | tr -d \%,)
+RATE=$(acpi -b | awk -F ' ' 'END {print $5}')
+STATE=$(acpi -b | awk -F ' ' 'END {print $3}' | tr -d \,)
+
+if ((CHARGE == "charging"))
+then
+	CHARGE=$(acpi -b | awk -F ' ' 'END {print $5}' | tr -d \%)
+	RATE="Not Charging"
+	STATE="Discharging"
+fi
+
+if ((RATE == "charging"))
+then
+	RATE="Not Charging"
+fi
+
+echo "{ \"charge\": $CHARGE, \"rate\": \"$RATE\", \"state\": \"$STATE\"}"

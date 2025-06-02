@@ -1,0 +1,204 @@
+(include "modules/floating-window/module.yuck")
+(include "modules/separator/module.yuck")
+(include "modules/power-options/module.yuck")
+
+(deflisten SEARCH_RESULTS :initial "[]" "tail -f ~/.config/eww/data/search-results.json")
+(defpoll RECENT_ACTIONS :initial "[]" :interval "10m" "cat data/recent-searches.json")
+
+(
+	defwindow Start
+	:monitor 0
+	:geometry (
+		geometry
+		:width "40%"
+		:height "50%"
+		:anchor "bottom center"
+	)
+	:stacking "fg"
+	:exclusive false
+	:focusable true
+	(
+		FloatingWindow
+		(Searchbar)
+		(Contents)
+		(
+			button
+			:class "IconButton"
+			:onclick "eww close Start"
+			""
+		)
+		
+	)
+)
+
+(
+	defwidget Contents []
+	(
+		box
+		:vexpand true
+		(
+			scroll
+			:hscroll false
+			:vscroll true
+			:vexpand true
+			:visible { SEARCH_RESULTS != "[]" }
+			(
+				box
+				:orientation "v"
+				:space-evenly false
+				(for result in SEARCH_RESULTS
+					(SearchResult :result result)
+				)
+			)
+		)
+		(Start)
+	)
+)
+
+(
+	defwidget Start []
+	(
+		box
+		:class "Start"
+		:vexpand true
+		:hexpand true
+		:space-evenly false
+		:visible { SEARCH_RESULTS == "[]" }
+		(
+			box
+			:class "StartFavourites"
+			:valign "center"
+			:orientation "v"
+			(
+				box
+				:orientation "v"
+				(
+					box
+					(StartWidget :onclick "firefox" :icon "󰈹")
+					(StartWidget :onclick "kitty --detach nvim" :icon "")
+				)
+				(
+					box
+					(StartWidget :onclick "hyprctl dispatch exec 'dolphin --new-window'" :icon "")
+					(StartWidget :onclick "hyprctl dispatch exec kitty" :icon "󰆍")
+				)
+			)
+			(
+				box
+				:orientation "v"
+				(
+					box
+					(StartWidget :onclick "" :icon "󰒓")
+					(StartWidget :onclick "" :icon "")
+				)
+				(
+					box
+					(StartWidget :onclick "" :icon "󰓓")
+					(StartWidget :onclick "" :icon "")
+				)
+			)
+		)
+		(Separator)
+		(
+			box
+			:orientation "v"
+			:hexpand true
+			:space-evenly false
+			(
+				scroll
+				:vexpand true
+				(
+					box
+					:orientation "v"
+					:space-evenly false
+					(for result in RECENT_ACTIONS
+						(SearchResult :result result)
+					)
+				)
+			)
+			(
+				box
+				:class "StartUserOptions"
+				:valign "end"
+				:halign "end"
+				(PowerOptions)
+			)
+		)
+	)
+)
+
+(
+	defwidget StartWidget [onclick icon]
+	(
+		button
+		:class "StartWidget"
+		:valign "center"
+		:halign "center"
+		:onclick "eww close Start; ${onclick}"
+		(
+			label
+			:text icon
+			:xalign 0.35
+		)
+	)
+)
+
+(
+	defwidget Searchbar []
+	(
+		box
+		:class "Searchbar"
+		:orientation "h"
+		:space-evenly false
+		:hexpand true
+		(
+			label
+			:class "SearchbarIcon"
+			:text ""
+		)
+		(
+			input
+			:class "SearchbarInput"
+			:hexpand true
+			:onchange "scripts/search {}"
+			:timeout "10s"
+		)
+	)
+)
+
+(
+	defwidget SearchResult [result]
+	(
+		eventbox
+		:class "SearchResult"
+		:onclick "${result.action}; scripts/recent-searches '${result}'; eww close Start"
+		(
+			box
+			:orientation "h"
+			:space-evenly false
+			(
+				label 
+				:class "SearchResultIcon"
+				:text "${result.type}"
+			)
+			(
+				box
+				:orientation "v"
+				:space-evenly false
+				:valign "center"
+				(
+					label
+					:class "SearchResultName"
+					:text "${result.name}"
+					:xalign 0
+				)
+				(
+					label
+					:class "SearchResultPath"
+					:text "${result.path}"
+					:xalign 0
+				)
+			)
+		)
+	)
+)

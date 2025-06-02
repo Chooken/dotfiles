@@ -1,0 +1,27 @@
+(
+	defwidget Slider [text max value onchange]
+	(
+		box
+		:class "SliderBox"
+		:orientation "h"
+		:space-evenly false
+		:hexpand true
+		(
+			label
+			:class "SliderIcon"
+			:text text
+		)
+		(
+			box
+			:hexpand true
+			(
+				scale
+				:class "Slider"
+				:max max
+				:value value
+				:onchange onchange
+			)
+		)
+	)
+
+)

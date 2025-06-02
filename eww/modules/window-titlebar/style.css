@@ -1,0 +1,9 @@
+.WindowTitlebar {
+	padding: 1rem;
+	margin-bottom: 0.5rem;
+}
+
+.WindowTitlebar label {
+	color: @light-gray;
+	margin-top: 0.25rem;
+}

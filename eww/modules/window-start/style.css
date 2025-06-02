@@ -1,0 +1,66 @@
+.Start {
+    padding: 0 1rem;
+}
+
+.StartUserOptions {
+    padding: 1rem 0;
+}
+
+.StartFavourites {
+
+}
+
+.StartWidget {
+    background: transparent;
+    font-size: 3rem;
+    min-width: 4rem;
+    min-height: 4rem;
+    margin: 4px;
+    border-radius: 1rem;
+}
+
+.StartWidget:hover {
+    background: @dark-gray;
+}
+
+.Searchbar {
+    margin: 1rem;
+    border-radius: 1rem;
+    background: @dark-gray;
+}
+
+.SearchbarIcon {
+    font-size: 1.4rem;
+    margin: 1rem 1.5rem;
+    color: @light-gray;
+}
+
+.SearchbarInput {
+    background: transparent;
+    font-size: 1.2rem;
+}
+
+.SearchResult {
+    background: transparent;
+    border-radius: 1rem;
+}
+
+.SearchResult:hover {
+    background: @dark-gray;
+}
+
+.SearchResultIcon {
+    font-size: 2rem;
+    padding: 1rem;
+}
+
+.SearchResultName {
+    font-size: 1.4rem;
+    padding: 0 1rem;
+}
+
+.SearchResultPath {
+    font-size: 1rem;
+    padding: 0 1rem;
+    color: @light-gray;
+}

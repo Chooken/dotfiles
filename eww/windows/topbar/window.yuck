@@ -1,0 +1,90 @@
+(defpoll TIME :interval "1m" 'date +"%I:%M %p"')
+(defpoll CURRENT_WIFI_STRENGTH :initial "󰤫" :interval "1s" 'scripts/wifi-signal-strength')
+
+(include "modules/battery/module.yuck")
+(include "modules/workspaces/module.yuck")
+
+(	
+	defwindow Topbar
+	:monitor 0
+	:geometry (
+		geometry
+		:x "0%"
+		:y "16px"
+		:width "100%"
+		:height "30px"
+		:anchor "top center"
+	)
+	:stacking "bg"
+	:exclusive "true"
+	:focusable "false"
+	(
+		centerbox
+		:orientation "horizontal"
+		(
+			box
+			:orientation "horizontal"
+			:halign "start"
+			:space-evenly false
+			(
+				button
+				:class "IconButton"
+				:onclick "eww kill | eww open Topbar"
+				""
+			)	
+		)
+		(
+			box
+			:orientation "horizontal"
+			:halign "center"
+			:space-evenly false
+			(workspaces)
+		)
+		(
+			box
+			:orientation "horizontal"
+			:halign "end"
+			:space-evenly false
+			(time)
+			(battery)
+			(wifi)
+			(settings)
+			(power)
+		)
+	)
+)
+
+(
+	defwidget wifi []
+	(
+		button
+		:class "IconButton"
+		:onclick "eww open --toggle Wifi"
+		"${CURRENT_WIFI_STRENGTH}"
+	)
+)
+
+(
+	defwidget settings []
+	(
+		button
+		:class "IconButton"
+		:onclick "eww open --toggle QuickSettings"
+		""
+	)
+)
+
+(
+	defwidget power []
+	(
+		button
+		:class "IconButton"
+		:onclick "shutdown now"
+		""
+	)
+)
+
+(
+	defwidget time []
+	"${TIME}"
+)

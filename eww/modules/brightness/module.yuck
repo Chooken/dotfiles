@@ -1,0 +1,28 @@
+(include "modules/slider/module.yuck")
+
+(defpoll BRIGHTNESS :interval "1m"  "brightnessctl g")
+(defpoll MAX_BRIGHTNESS :initial "500" :interval "1m" "brightnessctl m")
+(defpoll KBD_BRIGHTNESS :interval "1m"  "brightnessctl -d kbd_backlight g")
+(defpoll KBD_MAX_BRIGHTNESS :initial "500" :interval "1m" "brightnessctl -d kbd_backlight m")
+
+(
+	defwidget BacklightSlider []
+	(
+		Slider
+		:text ""
+		:value BRIGHTNESS
+		:max MAX_BRIGHTNESS
+		:onchange "brightnessctl s {}"
+	)
+)
+
+(
+	defwidget KeyboardBacklightSlider []
+	(
+		Slider
+		:text "󰬈"
+		:value KBD_BRIGHTNESS
+		:max KBD_MAX_BRIGHTNESS
+		:onchange "brightnessctl -d kbd_backlight s {}"
+	)
+)

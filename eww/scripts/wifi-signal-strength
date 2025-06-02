@@ -1,0 +1,28 @@
+#!/bin/bash
+
+strength=$(nmcli -c no -g 'IN-USE, SIGNAL' d wifi list | grep '*' | awk -F ':' 'END {print $2}' )
+
+if [[ $strength == "" ]];
+then
+	echo "󰤫"
+	exit
+fi
+
+if (( $strength < 66 ))
+then
+	icon="󰤥"
+else
+	icon="󰤨"
+fi
+
+if (( $strength < 33 ))
+then
+	icon="󰤟"
+fi
+
+if (( $strength == 0 ))
+then
+	icon="󰤫"
+fi
+
+echo $icon

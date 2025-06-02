@@ -1,0 +1,7 @@
+(
+	defwidget TopbarWindow
+	(
+		centerbox
+		:
+	)
+)

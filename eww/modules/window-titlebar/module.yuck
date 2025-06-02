@@ -1,0 +1,38 @@
+(
+	defwidget WindowTitlebar [title onclose]
+	(
+		box
+		:class "WindowTitlebar"
+		:orientation "h"
+		:hexpand true
+		(
+			label
+			:text title
+			:halign "start"
+		)
+		(
+			box
+			:halign "end"
+			(
+				WindowQuit
+				:onclose onclose
+			)
+		)
+	)
+)
+
+(
+	defwidget WindowQuit [onclose]
+	(
+		button
+		:class "FancyButton"
+		:onclick onclose
+		(
+			label
+			:text ""
+			:justify "center"
+			:valign 0.5
+			:halign 0.5
+		)
+	)
+)

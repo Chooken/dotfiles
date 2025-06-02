@@ -1,0 +1,30 @@
+.WifiWindowTitlebar {
+	padding: 1rem;
+	color: @light-gray;
+}
+
+.WifiListLabel {
+	color: @light-gray;
+	margin: 1rem 1rem;
+	margin-top: 1.25rem
+}
+
+.WifiOption {
+	padding: 0.5rem 1rem;
+	background: transparent;
+	border-radius: 1rem;
+}
+
+.WifiOption:hover {
+	background: @dark-gray;
+}
+
+.WifiIcon {
+	background: @mid-gray;
+	border-radius: 2rem;
+}
+
+.WifiIconActive {
+	background: linear-gradient(90deg, @highlight-1, @highlight-2);
+	color: @dark-gray;
+}

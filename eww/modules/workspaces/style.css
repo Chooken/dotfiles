@@ -1,0 +1,29 @@
+@import "../../colors.css";
+
+.Workspaces {
+  
+}
+
+.Workspace {
+  background: @dark-gray;
+  border-radius: 2rem;
+  min-width: 18px;
+  margin: 0 4px;
+  padding: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.Workspace:hover {
+  background: linear-gradient(90deg, @highlight-1 0%, @highlight-2 100%);;
+}
+
+.Workspace.active {
+  background: linear-gradient(90deg, @highlight-1 0%, @highlight-2 100%);
+  min-width: 4rem;
+}
+
+.Workspace.unused {
+  min-width: 0;
+  background: transparent;
+	margin: 0;
+}

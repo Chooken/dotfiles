@@ -1,0 +1,27 @@
+#!/bin/bash
+
+path=~/.config/eww/data/recent-searches.json
+
+touch $path
+
+recent=$(cat $path)
+buf="[ $1"
+
+length=$(jq 'length' <<< $recent)
+
+if [[ $recent != "" ]]
+then
+    for index in {0..3}
+    do
+        if (( index > $length - 1 ))
+        then
+            continue
+        fi
+        
+        buf="$buf, $(jq ".[$index]" <<< $recent)"
+    done
+fi
+
+buf="$buf ]"
+
+echo $buf > $path

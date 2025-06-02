@@ -1,0 +1,28 @@
+(include "modules/floating-window/module.yuck")
+(include "modules/brightness/module.yuck")
+(include "modules/window-titlebar/module.yuck")
+(include "modules/power-options/module.yuck")
+
+(
+	defwindow QuickSettings
+	:monitor 0
+	:geometry (
+		geometry
+		:width "30%"
+		:anchor "top right"
+	)
+	:stacking "fg"
+	:exclusive "false"
+	:focusable "false"
+	(
+		FloatingWindow
+		(
+			WindowTitlebar
+			:title "Quick Settings"
+			:onclose "eww close QuickSettings"
+		)
+		(BacklightSlider)
+		(KeyboardBacklightSlider)
+		(PowerOptions)
+	)	
+)

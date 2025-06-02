@@ -1,0 +1,30 @@
+#!/bin/bash
+
+knownlist=$(nmcli -c no -g 'NAME, TYPE' c)
+foundlist=$(nmcli -c no -g 'IN-USE, SSID, SIGNAL' d wifi list)
+
+active=$(grep '*' <<< $foundlist)
+inactive=$(grep -v --group-separator "\n" -e '*' <<< $foundlist)
+
+json="{ \"active\": {"
+
+json="$json $(awk -F ':' 'END {print "\"name\": \"" $2 "\", \"signal\": \"" $3 "\""}' <<< $active)"
+
+json="$json }, \"inactive\": ["
+
+IFS=$'\n'
+index=0
+for data in $inactive
+do
+	if (( $index != 0 ))
+	then
+		json="$json, "
+	fi
+	json="$json $(awk -F ':' 'END {print"{ \"name\": \"" $2 "\", \"signal\": \"" $3 "\" }" }' <<< $data)"
+	index+=1
+done
+unset IFS
+
+json="$json ] }"
+
+echo $json

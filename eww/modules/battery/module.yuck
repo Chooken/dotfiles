@@ -1,0 +1,52 @@
+(defpoll BATTERY :initial "{ \"charge\": 100, \"rate\": \"Not Charging\", \"state\": \"Discharging\" }" :interval "1s" 'scripts/battery')
+
+; width in pixels
+(defvar BatteryWidth 30)
+; This is the total margin + padding + border on the outline
+(defvar BatteryOutlinePadding 6)
+
+(
+	defwidget battery []
+	(
+		box
+		:class "Battery"
+		:orientation "horizontal"
+		:space-evenly false
+		(
+			box
+			:class "BatteryIcon"
+			:orientation "horizontal"
+			:space-evenly false
+			(
+				overlay
+				(
+					box
+					:class "BatteryBorder"
+					:halign "start"
+					:width BatteryWidth
+					:space-evenly false
+					(
+						box
+						:class "BatteryFill ${BATTERY.charge <= 20 ? "battery_low " : ""}${BATTERY.state == "Charging" && BATTERY.rate != "Not Charging" ? "charging" : ""}"
+						:width "${round((BatteryWidth - BatteryOutlinePadding) * BATTERY.charge / 100, 0)}"
+					)
+				)
+				(
+					label
+					:class "BatteryIconIcon"
+					:xalign 0.5
+					:yalign 0.5
+					:justify "center"
+					:text "${BATTERY.state == "Charging" && BATTERY.rate != "Not Charging" ? "󱐋" : ""}${BATTERY.state == "Charging" && BATTERY.rate == "Not Charging" ? "" : ""}"
+				)
+
+			)
+			(
+				box
+				:class "BatteryStub"
+				:width "2"
+			)
+		)
+		"${BATTERY.charge}%"
+	)
+)

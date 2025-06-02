@@ -1,0 +1,50 @@
+@import "colors.css";
+
+@import "modules/battery/style.css";
+@import "modules/workspaces/style.css";
+@import "modules/brightness/style.css";
+@import "modules/slider/style.css";
+@import "modules/icons/style.css";
+@import "modules/window-titlebar/style.css";
+@import "modules/window-wifi/style.css";
+@import "modules/window-start/style.css";
+@import "modules/separator/style.css";
+
+@import "modules/floating-window/style.css";
+@import "modules/topbar-window/style.css";
+@import "modules/buttons/style.css";
+
+* {
+  font-family: JetBrainsMono Nerd Font, sans-serif;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+window {
+	background: transparent;
+}
+
+scrollbar trough {
+  background: transparent;
+}
+
+scrolledwindow viewport {
+  margin-right: 24px;
+}
+
+scrollbar slider {
+  background: @dark-gray;
+  margin: 0;
+  padding: 3px;
+  box-shadow: 0 0 0 1px @light-gray inset;
+  border-radius: 1rem;
+}
+
+scrollbar slider:hover {
+  background: @mid-gray;
+}
+
+scrollbar slider:active {
+  box-shadow: 0 0 0 1px @highlight-1 inset;
+}

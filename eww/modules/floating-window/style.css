@@ -1,0 +1,8 @@
+.FloatingWindow {
+	background: #12121A;
+	margin: 20px;
+	padding: 1rem 1rem;
+	border-radius: 10px;
+	border: 2px solid @highlight-1;
+	box-shadow: 0 0 5 #000;
+}

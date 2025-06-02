@@ -1,0 +1,35 @@
+(deflisten WORKSPACES :initial "[1]" "scripts/workspaces")
+(deflisten MONITORS :initial "[1]" "scripts/hyprctl-monitors")
+
+(
+	defwidget workspaces []
+	(
+		box
+		:class "Workspaces"
+		:orientation "h"
+		:space-evenly false
+		:halign "center"
+		:valign "center"
+		(workspace :index 1)
+		(workspace :index 2)
+		(workspace :index 3)
+		(workspace :index 4)
+		(workspace :index 5)
+		(workspace :index 6)
+		(workspace :index 7)
+		(workspace :index 8)
+		(workspace :index 9)
+		(workspace :index 10)
+	)
+)
+
+(
+	defwidget workspace [index]
+	(
+		button
+		:class "Workspace ${MONITORS[0].activeWorkspace.id == WORKSPACES[index - 1]?.id ? "active" : ""} ${arraylength(WORKSPACES) < index ? "unused" : ""}"	
+		:width "${!(arraylength(WORKSPACES) < index) ? "18" : "-1"}"
+		:height "18"
+		:onclick "hyprctl dispatch workspace ${WORKSPACES[index - 1]?.id }"
+	)
+)

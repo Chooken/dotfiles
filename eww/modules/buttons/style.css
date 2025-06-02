@@ -1,0 +1,32 @@
+button.IconButton {
+  background: transparent;
+  padding: 0 1rem;
+  font-size: 1.2rem;
+}
+
+button.IconButton:hover {
+  color: @highlight-1;
+}
+
+button.IconButton:active {
+  color: @dark-gray;
+}
+
+button.FancyButton label {
+	color: #000;
+}
+
+button.FancyButton {
+	padding: 0 1.5rem;
+	padding-bottom: 0.25rem;
+	font-size: 1rem;
+	background: linear-gradient(90deg, @highlight-1, @highlight-2);
+	border-radius: 2rem;
+	transition: all 0.2s ease-in-out;
+}
+
+button.FancyButton:hover {
+	padding: 0 1.75rem;
+	padding-bottom: 0.25rem;
+	background: linear-gradient(90deg, @highlight-2, @highlight-2);
+}

@@ -1,0 +1,39 @@
+.Battery {
+  padding: 0 1rem;
+}
+
+.BatteryIcon {
+  margin: 0 0.5rem;
+}
+
+.BatteryIconIcon {
+	text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000;
+}
+
+.BatteryBorder {
+  /* Sum up these values and multiple by two to get the total width of fill */
+  border: 1px solid @light-gray;
+  padding: 1px;
+  margin: 9px 1px;
+  
+  border-radius: 4px;
+}
+
+.BatteryFill {
+  background: #FFFFFF;
+  border-radius: 2px;
+}
+
+.BatteryFill.battery_low {
+  background: #ff3845;
+}
+
+.BatteryFill.charging {
+	background: #5cff69;
+}
+
+.BatteryStub {
+  background: @light-gray;
+  margin: 13px 0px;
+  border-radius: 0 2px 2px 0;
+}

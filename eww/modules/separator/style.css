@@ -1,0 +1,6 @@
+.Separator {
+    min-width: 2px;
+    min-height: 2px;
+    margin: 1rem;
+    background: @mid-gray;
+}

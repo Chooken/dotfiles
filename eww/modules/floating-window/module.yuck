@@ -1,0 +1,10 @@
+(
+	defwidget FloatingWindow []
+	(
+		box
+		:class "FloatingWindow"
+		:orientation "v"
+		:space-evenly false
+		(children)
+	)
+)

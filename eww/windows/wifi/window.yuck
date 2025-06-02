@@ -1,0 +1,122 @@
+(include "modules/floating-window/module.yuck")
+
+(defpoll WIFILIST :interval "1s" "scripts/wifi-list")
+
+(
+	defwindow Wifi
+	:monitor 0
+	:geometry (
+		geometry
+		:width "30%"
+		:anchor "top right"
+	)
+	:stacking "fg"
+	:exclusive false
+	:focusable false
+	(
+		FloatingWindow
+		(WifiWindowTitlebar)
+		(ActiveWifiOption)
+		(
+			label
+			:class "WifiListLabel"
+			:text "Available"
+			:halign "start"
+		)
+		(
+				box
+				:orientation "v"
+				(WifiOption :index 0)
+				(WifiOption :index 1)
+				(WifiOption :index 2)
+				(WifiOption :index 3)
+				(WifiOption :index 4)
+				(WifiOption :index 5)
+				(WifiOption :index 6)
+				(WifiOption :index 7)
+				(WifiOption :index 8)
+				(WifiOption :index 9)
+				(WifiOption :index 10)
+				(WifiOption :index 11)
+				(WifiOption :index 12)
+				(WifiOption :index 13)
+				(WifiOption :index 14)
+				(WifiOption :index 15)
+		)
+	)
+)
+
+(
+	defwidget WifiWindowTitlebar []
+	(
+		box
+		:class "WifiWindowTitlebar"
+		:orientation "h"
+		(
+			label
+			:halign "start"
+			:valign "center"
+			:text "Wifi"
+		)
+		(box)
+		(
+			checkbox
+			:halign "end"
+			:valign "center"
+		)
+	)
+
+)
+
+(
+	defwidget ActiveWifiOption []
+	(
+		button
+		:class "WifiOption"
+		:onclick "nmcli c down '${WIFILIST.active.name}'"
+		:visible {WIFILIST.active.name != ""}
+		(
+			box
+			:orientation "h"
+			:space-evenly false
+			(WifiIcon :connected true :signal "${WIFILIST.active.signal}")
+			(
+				label
+				:text "${WIFILIST.active.name}"
+				:style "margin: 0 1rem;"
+			)
+		)
+	)
+)
+
+(
+	defwidget WifiOption [index]
+	(
+		button
+		:class "WifiOption"
+		:onclick "nmcli --ask d wifi connect '${WIFILIST.inactive[index].name}'"
+		:visible "${!(arraylength(WIFILIST.inactive) - 1 < index)}"
+		(
+			box
+			:orientation "h"
+			:space-evenly false
+			(WifiIcon :connected false :signal "${WIFILIST.inactive[index].signal}")
+			(
+				label
+				:text "${WIFILIST.inactive[index].name}"
+				:style "margin: 0 1rem;"
+			)
+		)
+	)
+)
+
+(
+	defwidget WifiIcon [connected signal]
+	(
+		box
+		:class "WifiIcon ${connected == true ? "WifiIconActive" : ""}"
+		:width 35
+		:height 35
+		( label :text "${signal > 66 ? "󰤨" : signal > 33 ? "󰤥" : signal > 0 ? "󰤟" : "󰤫"}" :xalign 0.425 :yalign 0.55)
+	)
+)

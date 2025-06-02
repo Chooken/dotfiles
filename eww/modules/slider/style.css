@@ -1,0 +1,24 @@
+.SliderBox {
+	padding: 0.25rem 1rem;
+}
+
+.SliderIcon {
+	font-size: 1.2rem;
+	padding-right: 0.5rem;
+}
+
+scale.Slider trough {
+	min-height: 1rem;
+	border-radius: 1rem;
+	background: @mid-gray;
+}
+
+scale.Slider trough highlight {
+	background: linear-gradient(90deg, @highlight-1, @highlight-2);
+	border-radius: 1rem;
+}
+
+scale.Slider slider {
+	background: transparent;
+	min-height: 1rem;
+}

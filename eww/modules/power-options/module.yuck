@@ -1,0 +1,27 @@
+(
+	defwidget PowerOptions []
+	(
+		box
+		:class "PowerOptions"
+		:orientation "h"
+		:style "padding-top: 1rem;" 
+		(
+			button
+			:class "IconButton"
+			:onclick "hyprctl dispatch exec hyprlock"
+			""
+		)
+		(
+			button
+			:class "IconButton"
+			:onclick "reboot"
+			""
+		)
+		(
+			button
+			:class "IconButton"
+			:onclick "shutdown now"
+			""
+		)
+	)
+)

@@ -1,0 +1,7 @@
+(
+    defwidget Separator []
+    ( 
+        box
+        :class "Separator"
+    )
+)

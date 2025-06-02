@@ -1,0 +1,242 @@
+#!/bin/bash
+
+path=~/.config/eww/data/search-results.json
+
+if [ "$1" == "" ]
+then
+	echo "[]" > $path
+	exit
+fi
+
+shopt patsub_replacement
+
+args=""
+dir=""
+search=""
+
+
+while [[ $# -gt 0 ]]
+do
+	case $1 in
+		-a|--apps)
+			dir="/usr/bin/"
+			shift
+			;;
+
+		-h|--home)
+			dir="$HOME"
+			shift
+			;;
+
+		*)
+			search="$1"
+			shift
+			;;
+	esac
+done
+
+search=${search//["#$%&'()*+,-.[]\\^?|{}"]/\\&}
+
+list=$(plocate -l 5 -i --regex ^$dir.*$search[^\/]*$)
+
+buf="["
+
+for l in $list
+do
+	mimetype=$(file -b --mime-type -L $l)
+	IFS='/' read -ra mimetypearray <<< "$mimetype"
+
+	case "${mimetypearray[0]}" in
+
+		"application")
+			case "${mimetypearray[1]}" in
+
+				"msword")
+					type="󱎒"
+					;;
+
+				"nd.openxmlformats-officedocument.wordprocessingml.document")
+					type="󱎒"
+					;;
+
+				"gzip")
+					type=""
+					;;
+
+				"x-tar")
+					type=""
+					;;
+
+				"zip")
+					type=""
+					;;
+
+				"x-7z-compressed")
+					type=""
+					;;
+
+				"vnd.ms-excel")
+					type="󱎏"
+					;;
+
+				"vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+					type="󱎏"
+					;;
+
+				"x-csh")
+					type=""
+					;;
+
+				"x-sh")
+					type=""
+					;;
+
+				"json")
+					type="󰈮"
+					;;
+
+				"ld+json")
+					type="󰈮"
+					;;
+
+				"xml")
+					type="󰈮"
+					;;
+
+				"pdf")
+					type=""
+					;;
+
+				*)
+					type="󰣆"
+					;;
+			esac
+			;;
+
+		"text")
+			case "${mimetypearray[1]}" in 
+				
+				"css")
+					type="󰈮"
+					;;
+				
+				"html")
+					type=""
+					;;
+				
+				"javascript")
+					type=""
+					;;
+				
+				"x-csharp")
+					type=""
+					;;
+				
+				"x-asm")
+					type=""
+					;;
+				
+				"x-c")
+					type=""
+					;;
+				
+				"x-c++")
+					type=""
+					;;
+				
+				"x-fortran")
+					type="󱈚"
+					;;
+				
+				"x-java")
+					type="󰬷"
+					;;
+				
+				"x-lisp")
+					type=""
+					;;
+				
+				"x-lua")
+					type=""
+					;;
+				
+				"x-makefile")
+					type=""
+					;;
+				
+				"x-perl")
+					type=""
+					;;
+
+				
+				"x-php")
+					type=""
+					;;
+
+				
+				"x-python")
+					type=""
+					;;
+
+				
+				"x-shellscript")
+					type=""
+					;;
+
+				
+				"x-zig")
+					type=""
+					;;
+				
+				"calendar")
+					type=""
+					;;
+
+
+
+				*)
+					type="󰈙"
+					;;
+	
+			esac
+			action="kitty --detach nvim $l"
+			;;
+
+		"image")
+			type="󰈟"
+		;;
+
+		"video")
+			type="󰈫"
+			;;
+
+		"audio")
+			type=""
+			;;
+
+		"inode")
+			type="󰉋"
+			action="kitty --detach --directory $l"
+			;;
+
+		"font")
+			type="󰛖"
+			;;
+
+		*)
+			type="󰈔"
+			;;
+
+	esac
+
+	buf="$buf { \"name\": \"$(basename "$l")\", \"type\": \"$type\", \"path\": \"$l\", \"action\": \"$action\" },"
+done
+
+if [[ "$buf" != \[ ]];
+then
+	buf="${buf::-1}"
+fi
+
+buf="$buf ]"
+
+echo -e $buf >> $path
